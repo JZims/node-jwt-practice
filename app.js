@@ -1,24 +1,28 @@
-const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv/config');
+import express from "express"
+import cors from "cors"
+import mongoose from "mongoose"
+import dotenv from "dotenv"
+import sheets from './routes/sheets'
+import users from './routes/users'
 
-const homeRoute = require('./routes/home.js')
-const postsRoute = require('./routes/posts.js')
+dotenv.config()
+const app = express()
+
 app.use(cors())
-// app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
-//Middlewares
-app.use('/posts', postsRoute);
-app.use('/', homeRoute);
 
 
 const PORT = process.env.PORT
-mongoose.connect(
-    process.env.DB_CONNECTION,{ useNewUrlParser: true, useUnifiedTopology: true
-     })
-     .then(() => app.listen(PORT, () => console.log('connected to db!')))
-     .catch((e) =>  console.log(e.message))
+    
+mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true, useUnifiedTopology: true })   
+    .then(() => app.listen(PORT, () => console.log('connected to db!')))
+    .catch((e) =>  console.log(e.message))
 
+mongoose.set('useFindAndModify', false)
+
+app.use('/sheets', sheets)
+app.use('/users', users)
+app.use("*", (req, res) => res.status(404).json({ error: "Not found" }))
+
+
+export default app

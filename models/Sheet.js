@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 
-const PostSchema = mongoose.Schema(
+export const SheetSchema = mongoose.Schema(
 {
     title: {
         type: String, 
@@ -17,4 +17,6 @@ const PostSchema = mongoose.Schema(
     }
 });
 
-module.exports = mongoose.model('Posts', PostSchema);
+const Sheet = mongoose.model('Sheets', SheetSchema)
+
+export default Sheet

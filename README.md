@@ -1,4 +1,4 @@
-# node-api-practice
+# osheet-backend-node
 
-Simple REST API for learning Node.js
+The backend API for Omni-Sheet using Node.js
 
